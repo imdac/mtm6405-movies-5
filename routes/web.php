@@ -14,16 +14,19 @@ use Illuminate\Support\Facades\Route;
 function movies () {
     return [
         [
+          'movie_id' => 1,
           'movie_title' => "Labyrinth", 
           'director' => "Jim Henson", 
           'year' => 1986 
         ],
         [ 
+          'movie_id' => 2,
           'movie_title' => "Highlander", 
           'director' => "Russell Mulcahy", 
           'year' => 1986 
         ],
         [ 
+          'movie_id' => 3,
           'movie_title' => "Alien", 
           'director' => "Ridley Scott", 
           'year' => 1979
@@ -44,5 +47,19 @@ function movies () {
 */
 
 Route::get('/', function () {
+  $movies = movies();
+  return view('movies', [
+    'title' => 'Movies',
+    'movies' => $movies
+  ]);
+});
+
+Route::get('/movie/{movie_id}', function ($movie_id) {
+  $movies = movies();
+  
+  return view('movie', ['movie' => $movies[array_search($movie_id, array_column($movies, 'movie_id'))]]);
+});
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
