@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MovieController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,20 +47,6 @@ function movies () {
 |
 */
 
-Route::get('/', function () {
-  $movies = movies();
-  return view('movies', [
-    'title' => 'Movies',
-    'movies' => $movies
-  ]);
-});
+Route::get('/', [MovieController::class, 'index']);
+Route::get('/movie/{movie_id}', [MovieController::class, 'show']);
 
-Route::get('/movie/{movie_id}', function ($movie_id) {
-  $movies = movies();
-  
-  return view('movie', ['movie' => $movies[array_search($movie_id, array_column($movies, 'movie_id'))]]);
-});
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
