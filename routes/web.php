@@ -48,5 +48,9 @@ function movies () {
 */
 
 Route::get('/', [MovieController::class, 'index']);
+Route::post('/', [MovieController::class, 'store']);
+Route::get('/create', [MovieController::class, 'create']);
 Route::get('/movie/{movie_id}', [MovieController::class, 'show']);
-
+Route::put('/movie/{movie_id}', [MovieController::class, 'update']);
+Route::delete('/movie/{movie_id}', [MovieController::class, 'destroy']);
+Route::get('/movie/{movie_id}/edit', [MovieController::class, 'edit']);

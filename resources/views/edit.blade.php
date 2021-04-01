@@ -15,24 +15,30 @@
   <div class="col">
     <h1 class="display-4">Edit Movie</h1>
 
-    <form class="bg-light border border-1 p-5">
+    <form method="post" action="/movie/{{ $movie['movie_id'] }}" class="bg-light border border-1 p-5">
+      @csrf
+      @method('put')
       <div class="mb-3">
         <label class="form-label" for="movieTitle">Movie Title</label>
-        <input type="text" id="movieTitle" name="movie_title" class="form-control">
+        <input type="text" id="movieTitle" name="movie_title" class="form-control"
+          value="{{ $movie['movie_title'] }}">
       </div>
       <div class="mb-3">
         <label class="form-label" for="movieDirector">Director</label>
-        <input type="text" id="movieDirector" name="director" class="form-control">
+        <input type="text" id="movieDirector" name="director" class="form-control"
+          value="{{ $movie['director'] }}">
       </div>
       <div class="mb-3">
         <label class="form-label" for="movieYear">Year</label>
-        <input type="number" id="movieYear" name="year" class="form-control">
+        <input type="number" id="movieYear" name="year" class="form-control"
+          value="{{ $movie['year'] }}">
       </div>
       <div class="mb-3">
         <label class="form-label" for="movieGenre">Genre</label>
         <select class="form-select" name="genre_id">
           @foreach (['', 'Fantasy', 'Sci-Fi', 'Action', 'Comedy', 'Drama', 'Horror', 'Romance', 'Family'] as $genre)
-          <option value="{{ $loop->index }}">{{ $genre }}</option>
+          <option value="{{ $loop->index }}"
+            @if ($movie['genre_id'] === $loop->index) selected @endif>{{ $genre }}</option>
           @endforeach
         </select>
       </div>
@@ -40,6 +46,11 @@
         <button type="submit" class="btn btn-primary me-3">Update Movie</button>
         <a href="" class="btn btn-secondary">Cancel</a>
       </div>
+    </form>
+    <form method="post" action="/movie/{{ $movie['movie_id'] }}">
+      @csrf
+      @method('delete')
+      <button type="submit" class="btn btn-danger mt-3">Delete Movie</button>
     </form>
   </div>
 </div>

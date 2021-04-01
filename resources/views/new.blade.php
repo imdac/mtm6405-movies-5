@@ -15,7 +15,8 @@
   <div class="col">
     <h1 class="display-4">Add Movie</h1>
 
-    <form class="bg-light border border-1 p-5">
+    <form method="post" action="/" class="bg-light border border-1 p-5">
+      @csrf
       <div class="mb-3">
         <label class="form-label" for="movieTitle">Movie Title</label>
         <input type="text" id="movieTitle" name="movie_title" class="form-control">

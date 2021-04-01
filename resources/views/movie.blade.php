@@ -8,7 +8,7 @@
     
   </div>
   <div class="col-6 d-flex justify-content-end">
-    <a class="btn btn-outline-primary" href="">Edit</a> 
+    <a class="btn btn-outline-primary" href="/movie/{{ $movie['movie_id'] }}/edit">Edit</a> 
   </div>
 </div>
 <div class="row">
