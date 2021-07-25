@@ -1,47 +1,17 @@
-@extends('base')
+<x-layout>
+  <x-slot name="title">New Movie</x-slot>
 
-@section('title', 'New Movie')
+  <h2 class="form-title">New Movie</h2>
+  <form class="form" method="post">
+    <input type="text" class="form-control" name="movie_title" placeholder="Movie Title" required>
+    <input type="text" class="form-control" name="director" placeholder="Director" required>
+    <input type="number" class="form-control" name="year" placeholder="Year" required>
+    <select class="form-control" name="genre_id">
+      @foreach ($genres as $genre)
+          <option value="{{ $genre['genre_id'] }}">{{ $genre['genre_title']; }}</option>
+      @endforeach
+    </select>
+    <button type="submit" class="button">Add Movie</button>
+  </form>
 
-@section('content')
-<div class="row my-3">
-  <div class="col-6">
-    
-  </div>
-  <div class="col-6 d-flex justify-content-end">
-   
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <h1 class="display-4">Add Movie</h1>
-
-    <form method="post" action="/" class="bg-light border border-1 p-5">
-      @csrf
-      <div class="mb-3">
-        <label class="form-label" for="movieTitle">Movie Title</label>
-        <input type="text" id="movieTitle" name="movie_title" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label class="form-label" for="movieDirector">Director</label>
-        <input type="text" id="movieDirector" name="director" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label class="form-label" for="movieYear">Year</label>
-        <input type="number" id="movieYear" name="year" class="form-control">
-      </div>
-      <div class="mb-3">
-        <label class="form-label" for="movieGenre">Genre</label>
-        <select class="form-select" name="genre_id">
-          @foreach (['', 'Fantasy', 'Sci-Fi', 'Action', 'Comedy', 'Drama', 'Horror', 'Romance', 'Family'] as $genre)
-          <option value="{{ $loop->index }}">{{ $genre }}</option>
-          @endforeach
-        </select>
-      </div>
-      <div class="d-flex">
-        <button type="submit" class="btn btn-primary me-3">Add Movie</button>
-        <a href="/" class="btn btn-secondary">Cancel</a>
-      </div>
-    </form>
-  </div>
-</div>
-@endsection
+</x-layout>

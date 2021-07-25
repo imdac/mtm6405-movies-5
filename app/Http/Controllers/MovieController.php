@@ -2,73 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Movie;
 use Illuminate\Http\Request;
+use App\Models\Movie;
+use App\Models\Genre;
 
 class MovieController extends Controller
 {
     public function index () {
-        $query = request('query');
+        $search = request('search');
 
-        if ($query) {
-            // do a search
-            $movies = Movie::where('movie_title', 'like', "%{$query}%")->get();
+        if ($search) {
+            $movies = Movie::where('movie_title', 'like', "%$search%")
+                ->orWhere('director', 'like', "%$search%")->get();
         } else {
-            // return all movies
-            $movies = Movie::all()->toArray();
+            $movies = Movie::all();
         }
-
-        return view('movies', ['title'=>'Movies', 'movies' => $movies]);
-    }
-
-    public function show ($movie_id) {
-        $movie = Movie::find($movie_id);
-
-        return view('movie', ['movie' => $movie]);
-    }
-
-    public function search ($query) {
-        $movies = Movie::where('movie_title', 'like', "%{$query}%")->get();
         
-        return view('movies', ['title'=>'Movies', 'movies' => $movies]);
+        return view('home', ['movies' => $movies]);
+    }
+
+    public function show ($id) {
+        $movie = Movie::find($id);
+        return view('movie', $movie);
     }
 
     public function create () {
-        return view('new');
+        $genres = Genre::all();
+        return view('new', ['genres' => $genres]);
     }
 
-    public function store () {
-        $movie = new Movie;
-        $movie->movie_title = request('movie_title');
-        $movie->director = request('director');
-        $movie->year = request('year');
-        $movie->genre_id = request('genre_id');
-        $movie->save();
-
-        return redirect('/');
-    }
-
-    public function edit ($movie_id) {
-        $movie = Movie::find($movie_id);
-
-        return view('edit', ['movie' => $movie]);
-    }
-
-    public function update ($movie_id) {
-        $movie = Movie::find($movie_id);
-        $movie->movie_title = request('movie_title');
-        $movie->director = request('director');
-        $movie->year = request('year');
-        $movie->genre_id = request('genre_id');
-        $movie->save();
-
-        return redirect("/movie/{$movie_id}");
-    }
-
-    public function destroy ($movie_id) {
-        $movie = Movie::find($movie_id);
-        $movie->delete();
-
-        return redirect('/');
+    public function edit () {
+        $genres = Genre::all();
+        return view('edit', ['genres' => $genres]);
     }
 }
